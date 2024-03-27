@@ -41,6 +41,7 @@ namespace DB.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
@@ -54,6 +55,7 @@ namespace DB.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Id1C")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<byte[]>("Image")
@@ -82,10 +84,13 @@ namespace DB.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<int?>("ProjectId")
+                        .HasColumnType("int");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TaskState")
+                    b.Property<int>("TaskState")
                         .HasColumnType("int");
 
                     b.Property<bool>("TwoFactorEnabled")
@@ -109,33 +114,9 @@ namespace DB.Migrations
                         .IsUnique()
                         .HasFilter("[PhoneNumber] IS NOT NULL");
 
+                    b.HasIndex("ProjectId");
+
                     b.ToTable("AspNetUsers", (string)null);
-                });
-
-            modelBuilder.Entity("DB.Models.Category", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(25)
-                        .HasColumnType("nvarchar(25)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("DB.Models.Client", b =>
@@ -162,6 +143,7 @@ namespace DB.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("YoutubeLink")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -181,6 +163,7 @@ namespace DB.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Certificates")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Experience")
@@ -203,6 +186,49 @@ namespace DB.Migrations
                     b.ToTable("Employers");
                 });
 
+            modelBuilder.Entity("DB.Models.Mission", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("DeadLine")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsExpired")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<bool>("IsVeryImportant")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProjectId");
+
+                    b.ToTable("Missions");
+                });
+
             modelBuilder.Entity("DB.Models.Order", b =>
                 {
                     b.Property<int>("Id")
@@ -211,26 +237,53 @@ namespace DB.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime?>("DoneDate")
+                    b.Property<DateTime>("DoneDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("PaymentMethod")
+                    b.Property<int>("DoneState")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("StartDate")
+                    b.Property<int>("PaymentMethod")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("TotalPrice")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Order");
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("DB.Models.OrderProduct", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("OrderProducts");
                 });
 
             modelBuilder.Entity("DB.Models.Product", b =>
@@ -241,53 +294,39 @@ namespace DB.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ClientId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Description")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Id1C")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)")
+                        .HasAnnotation("ErrorMessage", "The Id 1C field is required!");
 
                     b.Property<byte[]>("Image")
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<bool?>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
-                    b.Property<bool?>("IsFlagman")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
-                    b.Property<bool?>("IsPublic")
+                    b.Property<bool>("IsPublic")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
                         .HasDefaultValue(false);
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasAnnotation("ErrorMessage", "The Name field is required.");
 
-                    b.Property<int>("Price")
-                        .HasColumnType("int");
+                    b.Property<string>("ProductType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasAnnotation("ErrorMessage", "The ProductType field is required!");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
+                    b.HasIndex("Id1C")
+                        .IsUnique();
 
-                    b.HasIndex("ClientId");
-
-                    b.ToTable("Product");
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("DB.Models.Project", b =>
@@ -302,6 +341,7 @@ namespace DB.Migrations
                         .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<byte[]>("DesignTheme")
@@ -317,7 +357,7 @@ namespace DB.Migrations
                     b.ToTable("Projects");
                 });
 
-            modelBuilder.Entity("DB.Models.TaskOfProject", b =>
+            modelBuilder.Entity("DB.Models.Role", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -325,41 +365,38 @@ namespace DB.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime?>("DeadLine")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
+                    b.Property<string>("RoleName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsExpired")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
-                    b.Property<bool>("IsVeryImportant")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
-
-                    b.Property<int?>("ProjectId")
+                    b.Property<int?>("UserRoleId")
                         .HasColumnType("int");
-
-                    b.Property<DateTime?>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProjectId");
+                    b.HasIndex("UserRoleId");
 
-                    b.ToTable("TaskOfProjects");
+                    b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            RoleName = "Observer"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            RoleName = "Executor"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            RoleName = "Director"
+                        });
                 });
 
-            modelBuilder.Entity("DB.Models.UserTaskOfProject", b =>
+            modelBuilder.Entity("DB.Models.UserProject", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -367,10 +404,7 @@ namespace DB.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TaskOfProjectId")
+                    b.Property<int>("ProjectId")
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
@@ -379,13 +413,35 @@ namespace DB.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OrderId");
-
-                    b.HasIndex("TaskOfProjectId");
+                    b.HasIndex("ProjectId");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("OrderProducts");
+                    b.ToTable("UserProjects");
+                });
+
+            modelBuilder.Entity("DB.Models.UserRole", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("MissionId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MissionId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserRoles");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -417,24 +473,24 @@ namespace DB.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "ad478fe0-df03-4d67-bb5c-713c2ecf09f9",
+                            Id = "f80d113d-ce64-4705-9980-acc8ba7ce69b",
                             ConcurrencyStamp = "1",
                             Name = "Admin",
                             NormalizedName = "Admin"
                         },
                         new
                         {
-                            Id = "7eeeb6bb-089f-4419-b211-11822e2ff9fe",
+                            Id = "4d969aee-6a1a-48cd-adb6-60cf4bc7d7b7",
                             ConcurrencyStamp = "2",
                             Name = "User",
                             NormalizedName = "User"
                         },
                         new
                         {
-                            Id = "5e6bea84-a983-4bb8-a8a8-215b62faf17a",
+                            Id = "ef0a1d92-c2be-4d31-a484-e08751ffbdde",
                             ConcurrencyStamp = "3",
-                            Name = "HR",
-                            NormalizedName = "HR"
+                            Name = "Employer",
+                            NormalizedName = "Employer"
                         });
                 });
 
@@ -544,12 +600,19 @@ namespace DB.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("DB.Models.AspNetUser", b =>
+                {
+                    b.HasOne("DB.Models.Project", null)
+                        .WithMany("Users")
+                        .HasForeignKey("ProjectId");
+                });
+
             modelBuilder.Entity("DB.Models.Client", b =>
                 {
                     b.HasOne("DB.Models.AspNetUser", "User")
                         .WithOne("Client")
                         .HasForeignKey("DB.Models.Client", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("User");
@@ -560,65 +623,94 @@ namespace DB.Migrations
                     b.HasOne("DB.Models.AspNetUser", "User")
                         .WithOne("Employer")
                         .HasForeignKey("DB.Models.Employer", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("DB.Models.Mission", b =>
+                {
+                    b.HasOne("DB.Models.Project", "Project")
+                        .WithMany("Missions")
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Project");
                 });
 
             modelBuilder.Entity("DB.Models.Order", b =>
                 {
                     b.HasOne("DB.Models.AspNetUser", "User")
                         .WithMany("Orders")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("DB.Models.Product", b =>
+            modelBuilder.Entity("DB.Models.OrderProduct", b =>
                 {
-                    b.HasOne("DB.Models.Category", "Category")
-                        .WithMany("Products")
-                        .HasForeignKey("CategoryId")
+                    b.HasOne("DB.Models.Order", "Order")
+                        .WithMany("OrderProducts")
+                        .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("DB.Models.Client", null)
-                        .WithMany("Products")
-                        .HasForeignKey("ClientId");
+                    b.HasOne("DB.Models.Product", "Product")
+                        .WithMany("OrderProducts")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
-                    b.Navigation("Category");
+                    b.Navigation("Order");
+
+                    b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("DB.Models.TaskOfProject", b =>
+            modelBuilder.Entity("DB.Models.Role", b =>
+                {
+                    b.HasOne("DB.Models.UserRole", null)
+                        .WithMany("Roles")
+                        .HasForeignKey("UserRoleId");
+                });
+
+            modelBuilder.Entity("DB.Models.UserProject", b =>
                 {
                     b.HasOne("DB.Models.Project", "Project")
-                        .WithMany("TasksOfProject")
+                        .WithMany("UserProjects")
                         .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("Project");
-                });
-
-            modelBuilder.Entity("DB.Models.UserTaskOfProject", b =>
-                {
-                    b.HasOne("DB.Models.Order", null)
-                        .WithMany("OrderProducts")
-                        .HasForeignKey("OrderId");
-
-                    b.HasOne("DB.Models.TaskOfProject", "TaskOfProject")
-                        .WithMany()
-                        .HasForeignKey("TaskOfProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("DB.Models.AspNetUser", "User")
-                        .WithMany()
+                        .WithMany("UserProjects")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("TaskOfProject");
+                    b.Navigation("Project");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("DB.Models.UserRole", b =>
+                {
+                    b.HasOne("DB.Models.Mission", "Mission")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("MissionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("DB.Models.AspNetUser", "User")
+                        .WithMany("UserRoles")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Mission");
 
                     b.Navigation("User");
                 });
@@ -681,16 +773,15 @@ namespace DB.Migrations
                     b.Navigation("Employer");
 
                     b.Navigation("Orders");
+
+                    b.Navigation("UserProjects");
+
+                    b.Navigation("UserRoles");
                 });
 
-            modelBuilder.Entity("DB.Models.Category", b =>
+            modelBuilder.Entity("DB.Models.Mission", b =>
                 {
-                    b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("DB.Models.Client", b =>
-                {
-                    b.Navigation("Products");
+                    b.Navigation("UserRoles");
                 });
 
             modelBuilder.Entity("DB.Models.Order", b =>
@@ -698,9 +789,23 @@ namespace DB.Migrations
                     b.Navigation("OrderProducts");
                 });
 
+            modelBuilder.Entity("DB.Models.Product", b =>
+                {
+                    b.Navigation("OrderProducts");
+                });
+
             modelBuilder.Entity("DB.Models.Project", b =>
                 {
-                    b.Navigation("TasksOfProject");
+                    b.Navigation("Missions");
+
+                    b.Navigation("UserProjects");
+
+                    b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("DB.Models.UserRole", b =>
+                {
+                    b.Navigation("Roles");
                 });
 #pragma warning restore 612, 618
         }

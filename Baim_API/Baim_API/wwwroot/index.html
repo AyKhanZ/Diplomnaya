@@ -1,267 +1,263 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!--<link rel="stylesheet" href="./css/Style.css" />-->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Sometype+Mono:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet" />
-    <title>Verification Successful</title>
-    <style>
+    <title>Responsive HTML Email Template</title>
+    <style type="text/css">
         body {
-            display: flex;
-            align-items: center;
-            justify-content: center;
             margin: 0;
-            padding: 0;
+            padding: 100px 0;
+            background-color: #f6f9fc;
+        }
+
+        table {
+            border-spacing: 0;
+        }
+
+        td {
+            padding: 20px;
+        }
+
+        img {
+            border: 0;
+        }
+
+        .wrapper {
             width: 100%;
-            background-color: #f6f5f5;
-            font-family: "Roboto", sans-serif;
+            background-color: #f6f9fc;
+            table-layout: fixed;
+            padding-bottom: 40px;
         }
 
-        a {
-            text-decoration: none;
+        .outer {
+            max-width: 600px;
+            background-color: #ffffff;
         }
 
-        .container {
-            margin: 10vh 0;
-            padding: 30px 0;
-            width: 50%;
-            background-color: white;
-        }
-
-        header {
+        .main {
+            margin: 0 auto;
             width: 100%;
+            max-width: 600px;
+            border-spacing: 0;
+            font-family: sans-serif;
+            color: #4a4a4a;
         }
 
-        .top {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
+        .social {
+            padding-right: 5px;
         }
 
-        .confirmLine {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: #24aaa4;
+        .three-columns {
+            text-align: center;
+            padding-top: 40px;
+            padding-bottom: 30px;
+            font-size: 0;
         }
 
-        h1 {
-            font-size: 40px;
-            font-weight: 700;
-            color: #ffffff;
-            padding: 15px 0;
-        }
+            .three-columns .column {
+                width: 100%;
+                max-width: 200px;
+                display: inline-block;
+                vertical-align: top;
+            }
 
-        .logo {
-            width: 40%;
-            background-image: url("./icons/logo_baim.png");
-        }
-
-        .author {
-            width: 50%;
+        .padding {
+            padding: 15px;
         }
 
         .content {
-            color: #178e89;
-            font-size: 14px;
-            text-align: right;
-            margin: 2px;
+            font-size: 15px;
+            line-height: 20px;
         }
 
-        hr {
-            margin: 10px 20px;
-            border: 1.5px solid #178e89;
-        }
-
-        main {
-            padding: 20px;
-        }
-
-        .bold-text {
-            font-weight: bold;
-            color: #333333;
-            font-size: 16px;
-            margin: 30px 0px;
-        }
-
-        .text {
-            color: #333333;
-            font-size: 16px;
-            margin: 30px 0px;
-        }
-
-        .login-container {
-            display: flex;
-            align-items: center;
-        }
-
-        .login {
-            padding-left: 10px;
+        a {
+            color: #378bda;
             text-decoration: none;
-            color: #61c4f2;
-        }
-
-        .token-link {
             font-size: 16px;
-            color: #61c4f2;
-            text-decoration: none;
         }
 
-        .link {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
+        .phone {
+            display: none;
         }
 
-        footer {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .btn {
-            background-color: #178e89;
-            color: #ffffff;
-            border-radius: 30px;
-            padding: 12px 35px;
-            border-color: transparent;
-        }
-
-            .btn:hover {
-                background-color: #24aaa4;
-                cursor: pointer;
+        @media screen and (max-width: 600px) {
+            body {
+                background-color: white;
+                padding: 0;
             }
 
-        .icons {
-            display: flex;
-            justify-content: space-between;
-            width: 300px;
-        }
-
-        .icon {
-            height: 50px;
-            width: 50px;
-            box-sizing: border-box;
-            background-position: center;
-            background-size: cover;
-            margin: 0;
-            padding: 0;
-        }
-
-        .facebook {
-            background-image: url(./icons/fb.png);
-        }
-
-            .facebook:hover {
-                background-image: url(./icons/fb_gray.png);
+            .phone {
+                display: block;
             }
 
-        .instagram {
-            background-image: url(./icons/insta.png);
-        }
-
-            .instagram:hover {
-                background-image: url(./icons/insta_gray.png);
+            .pc {
+                display: none;
             }
 
-        .youtube {
-            background-image: url(./icons/youtube.png);
-        }
-
-            .youtube:hover {
-                background-image: url(./icons/youtube_gray.png);
+            img.third-img-last {
+                width: 200px !important;
+                max-width: 200px !important;
             }
 
-        .telegram {
-            background-image: url(./icons/telegram.png);
+            .padding {
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+            }
         }
 
-            .telegram:hover {
-                background-image: url(./icons/telegram_gray.png);
+        @media screen and (max-width: 400px) {
+            img.third-img {
+                width: 200px !important;
+                max-width: 200px !important;
             }
-
-        .tools-container {
-            background-image: url(./icons/youtube_gray.png);
-            width: 100%;
-            height: 200px;
         }
     </style>
-  </head>
-  <body>
-    <div class="container">
-      <header>
-        <div class="top">
-          <img src="./icons/logo_baim.png" alt="Logo" width="40%" />
-          <div class="author">
-            <p class="content">Biznesin Avtomatlaşdırma və İnkişaf Mərkəzi</p>
-            <p class="content">
-              Füzuli küç 49 "Füzuli Residence" Biznes Mərkəzi
-            </p>
-            <p class="content">+994555292966</p>
-            <p class="content">office@baim.az</p>
-          </div>
-        </div>
-        <div class="confirmLine">
-          <h1>Подтвердить email</h1>
-        </div>
-      </header>
-      <main>
-        <p class="bold-text">Поздравляем!</p>
-        <p class="text">
-          Ваш Baim создан и готов к работе. Последний шаг до завершения
-          регистрации – придумать пароль и подтвердить e-mail.
-        </p>
+</head>
+<body style='@media (max-width: 600px) { background-color: white;padding: 0; } @media (min-width: 601px) { margin: 0; padding: 100px 0; background-color: #f6f9fc; }'>
+    <center class="warpper">
+        <div class="outer">
+            <table class="main" align="center">
 
-        <div class="link">
-          <a href="{{Link}}" class="btn">ПОДТВЕРДИТЬ EMAIL</a>
+
+
+                <tr class="pc" style="width: 100%;">
+                    <td>
+                        <table>
+                            <td style="padding: 0; padding-right: 20px;">
+                                <img src="https://efgkzli.stripocdn.email/content/guids/CABINET_4509dc5c87b2be9596a7b1f311cebdc089ec207dfe9f831ccdd524baee66c324/images/logo_baim.png" alt="" width="180" />
+                            </td>
+                            <td style="padding: 0;">
+                                <p align="right" style="color:#178e89">Biznesin Avtomatlaşdırma və İnkişaf Mərkəzi</p>
+                                <p align="right" style="color:#178e89">Füzuli küç 49 "Füzuli Residence" Biznes Mərkəzi</p>
+                                <p align="right" style="color:#178e89">+994555292966</p>
+                                <p align="right" style="color:#178e89;"><a style="color:#178e89;" href="mailto:office@baim.az">office@baim.az</a></p>
+                            </td>
+                        </table>
+
+                    </td>
+
+                </tr>
+
+
+
+
+                <tr class="phone">
+                    <td align="left">
+
+                        <img src="https://efgkzli.stripocdn.email/content/guids/CABINET_4509dc5c87b2be9596a7b1f311cebdc089ec207dfe9f831ccdd524baee66c324/images/logo_baim_x68.png" alt="" width="560" class="adapt-img" />
+
+                    </td>
+
+                </tr>
+
+                <tr>
+                    <td align="center" bgcolor="#178e89" style=" text-align: center;background-color: #24aaa4;">
+                        <h1 align="center" style="color:#ffffff; text-align: center;">Подтвердить email</h1>
+                    </td>
+                </tr>
+
+
+
+                <tr>
+                    <td align="left">
+                        <p style="color:#333333">Поздравляем!</p><p style="color:#333333">Ваш Baim создан и готов к работе. Последний шаг до завершения регистрации – придумать пароль и подтвердить e-mail.</p>
+                    </td>
+                </tr>
+
+
+
+                <tr>
+                    <td align="center">
+                        <a href="{{Link}}" class="btn" style=" color: #ffffff; border-radius: 20px; padding: 10px 20px; margin-top: 20px; text-decoration: none;">
+                            <div style="border: 1px solid #178e89;background-color: #178e89; color: #ffffff; border-radius: 20px; padding: 10px 20px; margin-top: 20px;">Подтвердить email</div>
+                        </a>
+                    </td>
+                </tr>
+
+
+
+                <tr>
+                    <td align="left">
+                        <p>После подтверждения email возвращайтесь и работайте в Baim в любое удобное время.</p><p></p><p>Ваш логин: <a href="#" style="color:#61c4f2">zeynalovayxan70@gmail.com</a></p><p></p><p>Используйте в работе все инструменты Baim:</p>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td align="center" class="esd-block-image" style="font-size: 0">
+                        <a target="_blank">
+                            <img src="https://efgkzli.stripocdn.email/content/guids/CABINET_4509dc5c87b2be9596a7b1f311cebdc089ec207dfe9f831ccdd524baee66c324/images/screenshot_20240324_001233.png" alt="" width="560" class="adapt-img" />
+                        </a>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td align="left">
+
+                        <p>Не получилось перейти с кнопки?<br />Воспользуйтесь ссылкой: <a href="{{Link}}" target="_blank" style="color:#61c4f2">Confirm email</a></p><p>С уважением,<br />BAIM Support Team</p>
+
+                    </td>
+                </tr>
+                <tr style="border-top: 1px solid #178e89;">
+                    <td style="border-top: 2px solid #178e89; display: flex; justify-content: space-evenly;" align="center">
+
+                        <a href="#" style="text-decoration: none;">
+                            <div class="icon facebook" style="height: 30px; width: 30px; box-sizing: border-box; background-image: url(https://i.ibb.co/NLkwWK1/fb.png); background-position: center; background-size: cover; margin: 10px; padding: 0;"></div>
+                        </a>
+                        <a href="https://www.instagram.com/baim_1c/" style="text-decoration: none;">
+                            <div class="icon instagram" style="height: 30px; width: 30px; box-sizing: border-box; background-image: url(https://i.ibb.co/2s45kGF/insta.png); background-position: center; background-size: cover; margin: 10px; padding: 0;"></div>
+                        </a>
+                        <a href="#" style="text-decoration: none;">
+                            <div class="icon youtube" style="height: 30px; width: 30px; box-sizing: border-box; background-image: url(https://i.ibb.co/rGcNNg0/youtube.png); background-position: center; background-size: cover; margin: 10px; padding: 0;"></div>
+                        </a>
+                        <a href="#" style="text-decoration: none;">
+                            <div class="icon telegram" style="height: 30px; width: 30px; box-sizing: border-box; background-image: url(https://i.ibb.co/gzNJQqW/telegram.png); background-position: center; background-size: cover; margin: 10px; padding: 0;"></div>
+                        </a>
+
+                    </td>
+                </tr>
+
+                <tr>
+                    <td align="center">
+                        <a href="https://www.bing.com" class="btn" style=" color: #ffffff; border-radius: 20px; padding: 10px 20px; margin-top: 20px; text-decoration: none;">
+                            <div style="border: 1px solid #178e89;background-color: #178e89; color: #ffffff; border-radius: 20px; padding: 10px 20px; margin-top: 20px;">Посетите сайт</div>
+                        </a>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="background-color: #178e89">
+                        <table width="100%">
+                            <tr>
+                                <td style="
+                      padding: 20px;
+                      text-align: center;
+                      padding-bottom: 10px;
+                    ">
+
+                                    <p style="
+                        color:#ffffff;
+                        font-size: 16px;
+                        margin-top: 18px;
+                        margin-bottom: 10px;
+                      ">
+                                        Biznesin Avtomatlaşdırma və İnkişaf Mərkəzi
+                                    </p>
+                                    <p style="color:#ffffff">Füzuli küç 49 "Füzuli Residence" Biznes Mərkəzi</p>
+                                    <p style="color:#ffffff"> 
+                                        <a style="color:#ffffff" href="tel:+994555292966">+994555292966</a>
+                                    </p>
+                                    <p style="color:#ffffff">
+                                        <a style="color:#ffffff" href="mailto:office@baim.az">office@baim.az</a>
+                                    </p>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
         </div>
-
-        <p class="text">
-          После подтверждения email возвращайтесь и работайте в Baim в любое
-          удобное время:
-        </p>
-        <div class="login-container">
-          <p class="bold-text">Ваш логин:</p>
-          <a class="login" href="#">zeynalovayxan70@gmail.com</a>
-        </div>
-
-        <p class="text">Используйте в работе все инструменты Baim:</p>
-        <div class="tools-container"></div>
-
-        <p class="text">
-          Не получилось перейти с кнопки?<br />
-          Воспользуйтесь ссылкой:
-          <a href="{{Link}}" class="token-link"> Confirm email </a>
-        </p>
-
-        <p class="text">
-          С уважением,<br />
-          BAIM Support Team
-        </p>
-      </main>
-      <hr />
-      <footer>
-        <div class="icons">
-          <a href="#"><div class="icon facebook"></div></a>
-          <a href="https://www.instagram.com/baim_1c/"><div class="icon instagram"></div></a>
-          <a href="#"><div class="icon youtube"></div></a>
-          <a href="#"><div class="icon telegram"></div></a>
-        </div>
-        <a class="btn">Посетите наш сайт</a>
-      </footer>
-    </div>
-  </body>
+    </center>
+</body>
 </html>

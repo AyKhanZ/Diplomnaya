@@ -1,19 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DB.Models;
-
+﻿namespace DB.Models;
 public class Employer
 {
 	public int Id { get; set; }
 
-	public string UserId { get; set; }
-	public AspNetUser User { get; set; }
+	public string UserId { get; set; } = string.Empty;
+	public AspNetUser User { get; set; } = new AspNetUser();
 
-	public string Position { get; set; }
+	public string Position { get; set; } = string.Empty;
 	public int Experience { get; set; }
-	public string? Certificates { get; set; } 
+	public string Certificates { get; set; } = string.Empty;
 }

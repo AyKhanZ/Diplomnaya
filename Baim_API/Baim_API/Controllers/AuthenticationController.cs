@@ -93,7 +93,7 @@ public class AuthenticationController : ControllerBase
 			return StatusCode(StatusCodes.Status500InternalServerError,
 					new Response { Status = "Error", Message = "This role does not exist!" });
 		} 
-	}
+	} 
 
 	// SetPassword
 	// ResetPassword
@@ -141,6 +141,5 @@ public class AuthenticationController : ControllerBase
 		}
 		return StatusCode(StatusCodes.Status500InternalServerError,
 					new Response { Status = "Error", Message = "This user does not exist" });
-	} 
-	
+	}  
 }

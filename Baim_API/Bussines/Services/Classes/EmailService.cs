@@ -22,8 +22,7 @@ public class EmailService : IEmailService
 	//	emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Text) { Text = message.Content };
 
 	//	return emailMessage;
-	//}
-
+	//} 
 	private MimeMessage CreateEmailMessage(Message message,string confirmLink)
 	{
 		var emailMessage = new MimeMessage();
@@ -35,7 +34,7 @@ public class EmailService : IEmailService
 		htmlContent = htmlContent.Replace("{{Link}}", confirmLink);
 
 		var bodyBuilder = new BodyBuilder();
-		bodyBuilder.HtmlBody = htmlContent;  
+		bodyBuilder.HtmlBody = htmlContent;   
 
 		emailMessage.Body = bodyBuilder.ToMessageBody();
 
@@ -62,7 +61,5 @@ public class EmailService : IEmailService
 			client.Disconnect(true); 
 			client.Dispose(); 
 		}
-	}
-
-
+	} 
 }

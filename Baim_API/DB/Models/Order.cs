@@ -1,28 +1,18 @@
-﻿namespace DB.Models; 
+﻿using DB.Services.Classes;
 
-public enum DoneState
-{
-	Pending,   // Ожидающий подтверждения,
-	InProcess, // В процессе,
-	Done,      // Сделано, 
-	Cancelled  // Отмененный
-}
-public enum PaymentMethod
-{
-	Cash,   
-	Online  
-}
+namespace DB.Models;
 
 public class Order
 {
 	public int Id { get; set; }
-	public DateTime? StartDate { get; set; }
-	public DateTime? DoneDate { get; set; }
+	public DateTime StartDate { get; set; } = DateTime.Now;
+	public DateTime DoneDate { get; set; } = DateTime.Now.AddMonths(1);
 	public decimal TotalPrice { get; set; }
-	public PaymentMethod? PaymentMethod { get; set; }
+	public Enums.PaymentMethod PaymentMethod { get; set; } = Enums.PaymentMethod.Cash;
+	public Enums.DoneState DoneState { get; set; } = Enums.DoneState.Pending;
 
-	public string? UserId { get; set; }
-	public AspNetUser? User { get; set; }
+	public string UserId { get; set; } = string.Empty;
+	public AspNetUser User { get; set; } = new AspNetUser();
 
-	public List<UserTaskOfProject> OrderProducts { get; set; }
+	public List<OrderProduct> OrderProducts { get; set; } = new List<OrderProduct>();
 }

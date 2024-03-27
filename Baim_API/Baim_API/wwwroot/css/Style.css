@@ -9,8 +9,8 @@ body {
   font-family: "Roboto", sans-serif;
 }
 
-a{
-    text-decoration:none;
+a {
+  text-decoration: none;
 }
 
 .container {
@@ -46,8 +46,8 @@ h1 {
 }
 
 .logo {
-    width: 40%;
-    background-image: url("../icons/logo_baim.png");
+  width: 40%;
+  background-image: url(https://i.ibb.co/wJpgcX8/logo-baim.png);
 }
 
 .author {
@@ -110,61 +110,69 @@ footer {
   align-items: center;
   padding: 20px;
 }
- 
+
 .btn {
   background-color: #178e89;
   color: #ffffff;
   border-radius: 30px;
-  padding: 12px 35px; 
+  padding: 12px 35px;
   border-color: transparent;
 }
 
 .btn:hover {
   background-color: #24aaa4;
   cursor: pointer;
-} 
+}
 
 .icons {
   display: flex;
   justify-content: space-between;
   width: 300px;
-} 
+}
 .icon {
-    height: 50px;
-    width: 50px;
-    box-sizing: border-box;
-    background-position: center;
-    background-size: cover;
-    margin: 0;
-    padding: 0;
+  height: 50px;
+  width: 50px;
+  box-sizing: border-box;
+  background-position: center;
+  background-size: cover;
+  margin: 0;
+  padding: 0;
 }
+
 .facebook {
-    background-image: url(../icons/fb.png);
+  background-image: url(https://i.ibb.co/NLkwWK1/fb.png);
 }
-    .facebook:hover {
-        background-image: url(../icons/fb_gray.png);
-    }
+
+.facebook:hover {
+  background-image: url(https://i.ibb.co/gMbWw18/fb-gray.png);
+}
+
 .instagram {
-    background-image: url(../icons/insta.png);
+  background-image: url(https://i.ibb.co/2s45kGF/insta.png);
 }
-    .instagram:hover {
-        background-image: url(../icons/insta_gray.png);
-    }
+
+.instagram:hover {
+  background-image: url(https://i.ibb.co/prGzbpt/insta-gray.png);
+}
+
 .youtube {
-    background-image: url(../icons/youtube.png);
+  background-image: url(https://i.ibb.co/rGcNNg0/youtube.png);
 }
-    .youtube:hover {
-        background-image: url(../icons/youtube_gray.png);
-    }
+
+.youtube:hover {
+  background-image: url(https://i.ibb.co/SnyYf74/youtube-gray.png);
+}
+
 .telegram {
-    background-image: url(../icons/telegram.png);
+  background-image: url(https://i.ibb.co/gzNJQqW/telegram.png);
 }
-    .telegram:hover {
-        background-image: url(../icons/telegram_gray.png);
-    }
+
+.telegram:hover {
+  background-image: url(https://i.ibb.co/8zJmDR3/telegram-gray.png);
+}
 
 .tools-container {
-    background-image: url(../icons/youtube_gray.png);
-    width: 100%;
-    height: 200px;
+  background-image: url(./icons/youtube_gray.png);
+  width: 100%;
+  height: 200px;
 }

@@ -2,16 +2,13 @@
 public class Project
 {
     public int Id { get; set; }
-    public string Name { get; set; } 
-    public string? Description { get; set; }
+    public string Name { get; set; } = string.Empty;
+    public string Description { get; set; } = string.Empty;
+	// Del '?'
 	public byte[]? DesignTheme { get; set; }
 	// Del '?'
-	public byte[]? Avatar { get; set; }
-    // Del '?' 
-    // TeamMembers
-    //public IEnumerable<AspNetUser>? TeamMembers { get; set; }
-    //// Admins 
-    //public IEnumerable<AspNetUser>? ProjectAdmins { get; set; }
-    // Tasks
-    public IEnumerable<TaskOfProject>? TasksOfProject { get; set; }
-}
+	public byte[]? Avatar { get; set; } 
+    public IEnumerable<AspNetUser> Users { get; set; } = new List<AspNetUser>();
+    public IEnumerable<Mission> Missions { get; set; } = new List<Mission>();
+	public IEnumerable<UserProject> UserProjects { get; set; } = new List<UserProject>();
+} 
