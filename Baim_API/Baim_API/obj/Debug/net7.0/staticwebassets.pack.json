@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\css\\Style.css"
     },
     {
+      "Id": "D:\\Baim Project\\Baim_API\\Baim_API\\wwwroot\\forgotPasswordLink.html",
+      "PackagePath": "staticwebassets\\forgotPasswordLink.html"
+    },
+    {
       "Id": "D:\\Baim Project\\Baim_API\\Baim_API\\wwwroot\\icons.rar",
       "PackagePath": "staticwebassets\\icons.rar"
     },

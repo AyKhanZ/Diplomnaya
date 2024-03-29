@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "YMx1mfwAGeo99kIpQ/Cju5kKDgxrZ/Iq92xkYb4L6no=",
+  "Hash": "CjyaA9Fodi1Mq7e9i3tJUsOUH4/bIyS0AQyUTNAuNHw=",
   "Source": "Baim_API",
   "BasePath": "_content/Baim_API",
   "Mode": "Default",
@@ -1052,6 +1052,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\Style.css"
+    },
+    {
+      "Identity": "D:\\Baim Project\\Baim_API\\Baim_API\\wwwroot\\forgotPasswordLink.html",
+      "SourceId": "Baim_API",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Baim Project\\Baim_API\\Baim_API\\wwwroot\\",
+      "BasePath": "_content/Baim_API",
+      "RelativePath": "forgotPasswordLink.html",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\forgotPasswordLink.html"
     },
     {
       "Identity": "D:\\Baim Project\\Baim_API\\Baim_API\\wwwroot\\icons.rar",

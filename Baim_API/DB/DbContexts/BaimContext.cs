@@ -21,21 +21,20 @@ public class BaimContext : IdentityDbContext<AspNetUser, IdentityRole, string>
 
 
 	public BaimContext(DbContextOptions<BaimContext> options)
-		: base(options)
-	{ 
-	
-	}
+		: base(options) { }
 
 	protected override void OnModelCreating(ModelBuilder builder)
 	{
 		builder.Entity<AspNetUser>(entity =>
 		{
 			entity.HasKey(u => u.Id);
+			entity.Property(u => u.Id1C);
 			entity.Property(u => u.Age);
 			entity.Property(u => u.Image);
 			entity.Property(u => u.Description);
 			entity.Property(u => u.TaskState);
 			entity.Property(u => u.PhoneNumber);
+			entity.Property(u => u.Role).HasDefaultValue("User");
 
 			entity.HasIndex(u => u.PhoneNumber).IsUnique();
 

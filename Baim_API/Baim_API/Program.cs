@@ -18,11 +18,17 @@ builder.Services.AddSwaggerGen();
 var configuration = builder.Configuration;
 var connectionString = configuration.GetConnectionString("BAIM") ?? throw new InvalidOperationException("Connection string 'BaimContext' not found.");
 builder.Services.AddDbContext<BaimContext>(options => options.UseSqlServer(connectionString));
-
 builder.Services.AddSingleton<AspNetUser>();
 
 builder.Services.AddIdentity<AspNetUser, IdentityRole>()
 	.AddEntityFrameworkStores<BaimContext>().AddDefaultTokenProviders();
+
+// Added 
+builder.Services.Configure<IdentityOptions>(
+	options => options.SignIn.RequireConfirmedEmail =  true
+);
+// Added 
+builder.Services.Configure<DataProtectionTokenProviderOptions>(optionts => optionts.TokenLifespan = TimeSpan.FromHours(10));
 
 builder.Services.AddAuthentication(options =>
 {

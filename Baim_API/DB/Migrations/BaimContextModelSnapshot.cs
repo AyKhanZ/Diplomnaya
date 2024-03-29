@@ -87,6 +87,12 @@ namespace DB.Migrations
                     b.Property<int?>("ProjectId")
                         .HasColumnType("int");
 
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("User");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -473,21 +479,21 @@ namespace DB.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "f80d113d-ce64-4705-9980-acc8ba7ce69b",
+                            Id = "0928d3e0-eae4-4eac-bc22-8d411098980b",
                             ConcurrencyStamp = "1",
                             Name = "Admin",
                             NormalizedName = "Admin"
                         },
                         new
                         {
-                            Id = "4d969aee-6a1a-48cd-adb6-60cf4bc7d7b7",
+                            Id = "be8a15a6-f0ea-4c6c-a459-758190ac7ee2",
                             ConcurrencyStamp = "2",
                             Name = "User",
                             NormalizedName = "User"
                         },
                         new
                         {
-                            Id = "ef0a1d92-c2be-4d31-a484-e08751ffbdde",
+                            Id = "e115a374-190e-47a7-baaa-d02d43ea3e04",
                             ConcurrencyStamp = "3",
                             Name = "Employer",
                             NormalizedName = "Employer"
