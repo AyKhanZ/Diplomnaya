@@ -92,3 +92,4 @@ D:\Baim Project\Baim_API\Baim_API\bin\Debug\net7.0\MailKit.dll
 D:\Baim Project\Baim_API\Baim_API\bin\Debug\net7.0\MimeKit.dll
 D:\Baim Project\Baim_API\Baim_API\bin\Debug\net7.0\NETCore.MailKit.dll
 D:\Baim Project\Baim_API\Baim_API\bin\Debug\net7.0\BouncyCastle.Crypto.dll
+D:\Baim Project\Baim_API\Baim_API\bin\Debug\net7.0\Newtonsoft.Json.dll

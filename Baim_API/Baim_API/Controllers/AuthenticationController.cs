@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using System.Web;
 
 namespace Baim_API.Controllers;
 
@@ -45,42 +46,6 @@ public class AuthenticationController : ControllerBase
 		_configuration = configuration;
 		_emailService = emailService;
 	}
-	[HttpGet("Users")]
-	public async Task<IActionResult> GetUsers()
-	{
-		try
-		{
-			var users = await _userManager.Users.ToListAsync();
-			return Ok(users);
-		}
-		catch (Exception ex)
-		{
-			return StatusCode(StatusCodes.Status500InternalServerError, $"Failed to get users: {ex.Message}");
-		}
-	}
-
-	// GET: api/User/ById1C/{id1C}
-	[HttpGet("ById1C/{id1C}")]
-	public async Task<ActionResult<Product>> GetUserById1C(string id1C)
-	{
-		var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id1C == id1C);
-
-		if (user == null) return NotFound();
-
-		return Ok(user);
-	}
-
-	// GET: api/User/ById1C/{id1C}
-	[HttpGet("ById/{id}")]
-	public async Task<ActionResult<Product>> GetUserById(string id)
-	{
-		var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == id);
-
-		if (user == null) return NotFound();
-
-		return Ok(user);
-	}
-
 
 
 	[HttpPost("Registration")]
@@ -120,7 +85,7 @@ public class AuthenticationController : ControllerBase
 			await _userManager.AddToRoleAsync(newUser, role);
 
 			var token = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
-			var confirmationLink = Url.Action(nameof(ConfirmEmail), "Authentication", new { token, email = newUser.Email }, Request.Scheme);
+			var confirmationLink = Url.Action(nameof(ConfirmEmailRedirect), "Authentication", new { token, email = newUser.Email }, Request.Scheme);
 			if (confirmationLink != null)
 			{
 				var message = new Message(new string[] { newUser.Email }, "Confirmation email and password setup", confirmationLink);
@@ -137,8 +102,8 @@ public class AuthenticationController : ControllerBase
 		{
 			return StatusCode(StatusCodes.Status500InternalServerError,
 					new Response { Status = "Error", Message = "This role does not exist!" });
-		} 
-	}  
+		}
+	}
 
 	[HttpPost("Login")]
 	public async Task<IActionResult> Login([FromBody] LoginUser model)
@@ -152,13 +117,13 @@ public class AuthenticationController : ControllerBase
 
 				var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, lockoutOnFailure: true);
 				if (result.Succeeded)
-				{   
-					var roles = await _userManager.GetRolesAsync(user); 
-					var role = roles.FirstOrDefault(); 
+				{
+					var roles = await _userManager.GetRolesAsync(user);
+					var role = roles.FirstOrDefault();
 
 					if (role == null) return BadRequest("User does not have any roles!");
 
-					var tokenString = AuthService.GenerateTokenString(user,role,_configuration);
+					var tokenString = AuthService.GenerateTokenString(user, role, _configuration);
 					return Ok(new { UserId = user.Id, Token = tokenString });
 				}
 				return BadRequest("Invalid login attempt");
@@ -167,8 +132,26 @@ public class AuthenticationController : ControllerBase
 		return BadRequest("Not valid attempt");
 	}
 
-	[HttpGet("ConfirmEmail")]
-	public async Task<IActionResult> ConfirmEmail(string token, string email)
+	// GetRedirect
+	[HttpGet("ConfirmEmailRedirect")]
+	public async Task<IActionResult> ConfirmEmailRedirect(string token, string email)
+	{
+		var user = await _userManager.FindByEmailAsync(email);
+
+		if (user != null)
+		{
+			var result = await _userManager.ConfirmEmailAsync(user, token);
+			if (result.Succeeded)
+			{
+				return Redirect($"http://localhost:3000/email-confirmed/{HttpUtility.UrlEncode(token)}/{HttpUtility.UrlEncode(email)}"); 
+			}
+			else return BadRequest("Confirmation failed");
+		}
+		return StatusCode(StatusCodes.Status500InternalServerError,
+					new Response { Status = "Error", Message = "This user does not exist" });
+	}
+	[HttpGet("ConfirmEmailStatus")]
+	public async Task<IActionResult> ConfirmEmailStatus(string token, string email)
 	{
 		var user = await _userManager.FindByEmailAsync(email);
 
@@ -178,12 +161,13 @@ public class AuthenticationController : ControllerBase
 			if (result.Succeeded)
 			{
 				return StatusCode(StatusCodes.Status200OK,
-					new Response { Status = "Success", Message = "Email verified Successfully! " });
+					new Response
+					{
+						Status = "Success",
+						Message = "Email verified Successfully! ",
+					});
 			}
-			else
-			{
-				return BadRequest("Confirmation failed");
-			}
+			else return BadRequest("Confirmation failed");
 		}
 		return StatusCode(StatusCodes.Status500InternalServerError,
 					new Response { Status = "Error", Message = "This user does not exist" });
@@ -191,7 +175,10 @@ public class AuthenticationController : ControllerBase
 
 
 
-	
+
+
+
+
 	[HttpPut("ChangePassword")]
 	public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordModel model)
 	{
@@ -206,18 +193,17 @@ public class AuthenticationController : ControllerBase
 		if (!result.Succeeded) return BadRequest("Failed to change password");
 
 		return Ok("Password changed successfully");
-	} 
+	}
 
 
 
-	[HttpPost]
+	[HttpPost("forgot-password")]
 	[AllowAnonymous]
-	[Microsoft.AspNetCore.Mvc.Route("forgot-password")]
 	public async Task<IActionResult> ForgotPassword([Required] string email)
 	{
 		var user = await _userManager.FindByEmailAsync(email);
-		if(user != null) 
-		{ 
+		if (user != null)
+		{
 			var token = await _userManager.GeneratePasswordResetTokenAsync(user);
 			var forgotPasswordLink = Url.Action(nameof(ResetPassword), "Authentication", new { token, email = user.Email }, Request.Scheme);
 			if (forgotPasswordLink != null)
@@ -238,22 +224,21 @@ public class AuthenticationController : ControllerBase
 	[HttpGet("reset-password")]
 	public async Task<IActionResult> ResetPassword(string token, string email)
 	{
-		var model = new ResetPassword { Token  = token, Email = email };
-		return Ok( new 
+		var model = new ResetPassword { Token = token, Email = email };
+		return Ok(new
 		{
 			model
 		});
 	}
 
-	[HttpPost]
+	[HttpPost("reset-password")]
 	[AllowAnonymous]
-	[Microsoft.AspNetCore.Mvc.Route("reset-password")]
 	public async Task<IActionResult> ResetPassword(ResetPassword resetPassword)
 	{
 		var user = await _userManager.FindByEmailAsync(resetPassword.Email);
-		if(user != null)
+		if (user != null)
 		{
-			var resetPasswordResult = await _userManager.ResetPasswordAsync(user,resetPassword.Token,resetPassword.Password);
+			var resetPasswordResult = await _userManager.ResetPasswordAsync(user, resetPassword.Token, resetPassword.Password);
 
 			if (!resetPasswordResult.Succeeded)
 			{
@@ -269,6 +254,43 @@ public class AuthenticationController : ControllerBase
 		return StatusCode(StatusCodes.Status400BadRequest,
 				new Response { Status = "Error", Message = "Could not sent link to email,please try again" });
 	}
-} 
 
-//Измени LogIn на +Id1C
+
+
+	[HttpGet("Users")]
+	public async Task<IActionResult> GetUsers()
+	{
+		try
+		{
+			var users = await _userManager.Users.ToListAsync();
+			return Ok(users);
+		}
+		catch (Exception ex)
+		{
+			return StatusCode(StatusCodes.Status500InternalServerError, $"Failed to get users: {ex.Message}");
+		}
+	}
+
+	// GET: api/User/ById1C/{id1C}
+	[HttpGet("ById1C/{id1C}")]
+	public async Task<ActionResult<Product>> GetUserById1C(string id1C)
+	{
+		var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id1C == id1C);
+
+		if (user == null) return NotFound();
+
+		return Ok(user);
+	}
+
+	// GET: api/User/ById1C/{id1C}
+	[HttpGet("ById/{id}")]
+	public async Task<ActionResult<Product>> GetUserById(string id)
+	{
+		var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == id);
+
+		if (user == null) return NotFound();
+
+		return Ok(user);
+	}
+
+}
